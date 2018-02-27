@@ -1,4 +1,4 @@
-package com.lowes.jenkins.shared;
+package com.imran.jenkins;
 
 class GitPipelineSteps implements Serializable {
 
