@@ -12,9 +12,9 @@ class GitPipelineSteps implements Serializable {
    * Clean workspace.
    */
   
-   // def clean() {
+   /* def clean() {
      steps.deleteDir()
-   // }
+    }*/
   
   /**
    * Check out Source code.
