@@ -16,7 +16,7 @@ class DockerPipelineSteps implements Serializable {
     }
 
   def RemoveImage(dockerreponame, buildlabel) {
-	def Imageid = "docker rmi -f shaikimranashrafi/dockerreponame:buildlabel"
+	def Imageid = "docker rmi -f shaikimranashrafi/${dockerreponame}:${buildlabel}"
 	steps.sh "${Imageid}"
 	}
 
