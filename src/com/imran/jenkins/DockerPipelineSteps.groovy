@@ -6,6 +6,16 @@ class DockerPipelineSteps implements Serializable {
 
   DockerPipelineSteps(steps) { this.steps = steps }
 
+  def mavenbuild(mavenimage,goals) {
+     try {
+       mavenimage.inside { c ->
+       steps.sh "mvn ${goals}"
+        }
+      } finally { 
+       }
+   }
+
+
   def RemoveNoneImage() {
 	def NoneImageid = steps.sh (
 	script: "docker images | grep '<none>' | tr -s ' ' | cut -d ' ' -f3",
