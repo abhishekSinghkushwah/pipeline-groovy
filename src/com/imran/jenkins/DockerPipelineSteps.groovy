@@ -11,9 +11,10 @@ class DockerPipelineSteps implements Serializable {
   def mavenbuild(mavenimage,goals) {
      try {
        mavenimage.inside(docker_opts) { c ->
-       steps.sh "mvn /lowes/workspace ${goals}"
+       steps.sh "mvn --settings /lowes/workspace/settings.xml ${goals}"
         }
       } finally { 
+	 archiveArtifacts artifacts: 'target/surefire-reports/*.txt', fingerprint: true
        }
    }
 
