@@ -2,7 +2,7 @@ package com.imran.jenkins;
 
 class DockerPipelineSteps implements Serializable {
  
- static final def docker_opts   = "-v /home/root/.m2:/opt/imran/workspace/"
+ static final def docker_opts   = "-v /root/.m2:/opt/imran/workspace/"
 
   def steps
 
