@@ -1,6 +1,8 @@
 package com.imran.jenkins;
 
 class DockerPipelineSteps implements Serializable {
+ 
+ static final def docker_opts   = "-v /home/root/.m2:/lowes/workspace/"
 
   def steps
 
@@ -8,8 +10,8 @@ class DockerPipelineSteps implements Serializable {
 
   def mavenbuild(mavenimage,goals) {
      try {
-       mavenimage.inside { c ->
-       steps.sh "mvn ${goals}"
+       mavenimage.inside(docker_opts) { c ->
+       steps.sh "mvn /lowes/workspace ${goals}"
         }
       } finally { 
        }
