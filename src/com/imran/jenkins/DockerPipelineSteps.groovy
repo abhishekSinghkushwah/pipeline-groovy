@@ -16,7 +16,7 @@ class DockerPipelineSteps implements Serializable {
       } catch(err) {
           throw err
         } finally { 
-	  junit 'target/surefire-reports/*.txt'
+	  junit '**/target/surefire-reports/*.txt'
        }
    }
 
