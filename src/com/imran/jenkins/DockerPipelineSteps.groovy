@@ -2,7 +2,7 @@ package com.imran.jenkins;
 
 class DockerPipelineSteps implements Serializable {
  
- static final def docker_opts   = "-v /root/.m2:/opt/imran/workspace/"
+ /*static final def docker_opts   = "-v /root/.m2:/opt/imran/workspace/"*/
 
   def steps
 
@@ -10,12 +10,12 @@ class DockerPipelineSteps implements Serializable {
 
   def mavenbuild(mavenimage,goals) {
      try {
-       mavenimage.inside(docker_opts) { c ->
-       steps.sh "mvn /opt/imran/workspace/ ${goals}"
+       mavenimage.inside() { c ->
+       steps.sh "mvn ${goals}"
         }
-      } finally { 
+      } /*finally { 
 	 archiveArtifacts artifacts: 'target/surefire-reports/*.txt', fingerprint: true
-       }
+       }*/
    }
 
 
