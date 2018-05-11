@@ -16,10 +16,9 @@ class DockerPipelineSteps implements Serializable {
       } catch(err) {
           throw err
         } finally { 
-	  junit 'target/surefire-reports/*.txt', fingerprint: true
+	  junit 'target/surefire-reports/*.txt'
        }
    }
-
 
   def RemoveNoneImage() {
 	def NoneImageid = steps.sh (
