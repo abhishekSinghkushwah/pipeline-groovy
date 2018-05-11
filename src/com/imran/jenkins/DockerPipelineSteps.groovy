@@ -8,7 +8,7 @@ class DockerPipelineSteps implements Serializable {
 
   DockerPipelineSteps(steps) { this.steps = steps }
 
-  def mavenbuild(mavenimage,goals) {
+  def mavenbuild(mavenimage, goals, testreport = null) {
      try {
        mavenimage.inside() { c ->
        steps.sh "mvn ${goals}"
@@ -18,11 +18,26 @@ class DockerPipelineSteps implements Serializable {
                 currentBuild.result = 'FAILURE'
           throw err
         } finally { 
-	  step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml', healthScaleFactor: 1.0])
-	  junit '**/target/surefire-reports/*.txt'
+	 /* step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml', healthScaleFactor: 1.0])
+	  junit '**/target/surefire-reports/*.txt'*/
+	  archiveTestReport(testreport)
        }
    }
 
+   /*def execute(sonarimage, goals, testreport = null) {
+    try {
+      steps.sh "mvn ${goals} ${params}"
+    } finally {
+      archiveTestReport(testreport)
+    }
+  }*/
+   
+   def archiveTestReport(testreport) {
+    // Archive junit test results if requested.
+    if (testreport?.trim()) {
+      steps.junit testreport
+    }
+  }
   def RemoveNoneImage() {
 	def NoneImageid = steps.sh (
 	script: "docker images | grep '<none>' | tr -s ' ' | cut -d ' ' -f3",
