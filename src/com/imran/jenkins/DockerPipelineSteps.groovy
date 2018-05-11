@@ -18,9 +18,9 @@ class DockerPipelineSteps implements Serializable {
                 currentBuild.result = 'FAILURE'
           throw err
         } finally { 
-	 /* step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml', healthScaleFactor: 1.0])
-	  junit '**/target/surefire-reports/*.txt'*/
-	  archiveTestReport(testreport)
+	 // step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml', healthScaleFactor: 1.0])
+	  //  junit '**/target/surefire-reports/*.txt'
+	    archiveTestReport(testreport)
        }
    }
 
