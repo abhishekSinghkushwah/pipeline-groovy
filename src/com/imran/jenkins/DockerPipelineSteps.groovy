@@ -13,9 +13,11 @@ class DockerPipelineSteps implements Serializable {
        mavenimage.inside() { c ->
        steps.sh "mvn ${goals}"
         }
-      } /*finally { 
-	 archiveArtifacts artifacts: 'target/surefire-reports/*.txt', fingerprint: true
-       }*/
+      } catch(err) {
+          throw err
+        } finally { 
+	  junit 'target/surefire-reports/*.txt', fingerprint: true
+       }
    }
 
 
