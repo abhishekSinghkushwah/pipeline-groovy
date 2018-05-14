@@ -24,9 +24,11 @@ class DockerPipelineSteps implements Serializable {
        }
    }
 
-   /*def execute(sonarimage, goals, testreport = null) {
-    try {
-      steps.sh "mvn ${goals} ${params}"
+   def execute(sonarimage, goals, testreport = null) {
+     sonarimage.pull
+     try {
+      //steps.sh "mvn ${goals} ${params}"
+	steps.sh "mvn --setting /opt/maven/setting.xml ${goals}"
     } finally {
       archiveTestReport(testreport)
     }
