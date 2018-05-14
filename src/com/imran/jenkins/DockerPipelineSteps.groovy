@@ -2,7 +2,7 @@ package com.imran.jenkins;
 
 class DockerPipelineSteps implements Serializable {
  
- /*static final def docker_opts   = "-v /root/.m2:/opt/imran/workspace/"*/
+ static final def docker_opts   = "-v /home/jenkins/.m2:/opt/maven/"
 
   def steps
 
@@ -27,6 +27,7 @@ class DockerPipelineSteps implements Serializable {
    def execute(sonarimage, goals, testreport = null) {
      sonarimage.pull
      try {
+	sonarimage.inside(docker_opts)
       //steps.sh "mvn ${goals} ${params}"
 	steps.sh "mvn --setting /opt/maven/setting.xml ${goals}"
     } finally {
