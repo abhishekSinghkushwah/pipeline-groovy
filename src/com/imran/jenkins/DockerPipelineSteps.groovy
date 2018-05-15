@@ -33,7 +33,7 @@ class DockerPipelineSteps implements Serializable {
     } finally {
       archiveTestReport(testreport)
     }
-  }*/
+  }
    
    def archiveTestReport(testreport) {
     // Archive junit test results if requested.
