@@ -8,10 +8,10 @@ class DockerPipelineSteps implements Serializable {
 
   DockerPipelineSteps(steps) { this.steps = steps }
 
-  def mavenbuild(mavenimage, goals, testreport = null) {
+  def mavenbuild(image, goals, testreport = null) {
      try {
-       mavenimage.inside() { c ->
-       steps.sh "mvn ${goals}"
+       image.inside(docker_opts) { c ->
+       steps.sh "mvn --settings /opt/maven/settings.xml ${goals}"
         }
       } catch(err) {
 	if (currentBuild.result == 'UNSTABLE')
@@ -24,12 +24,13 @@ class DockerPipelineSteps implements Serializable {
        }
    }
 
-   def execute(sonarimage, goals, testreport = null) {
-     sonarimage.pull
+   def sonar(image, goals, testreport = null) {
+     image.pull
      try {
-	sonarimage.inside(docker_opts)
-      //steps.sh "mvn ${goals} ${params}"
-	steps.sh "mvn --setting /opt/maven/setting.xml ${goals}"
+	image.inside(docker_opts) { c ->
+      //steps.sh "mvn ${goals}"
+	steps.sh "mvn --setting /opt/maven/settings.xml ${goals}"
+	}
     } finally {
       archiveTestReport(testreport)
     }
@@ -60,4 +61,3 @@ class DockerPipelineSteps implements Serializable {
         steps.sh "${ContainerId}"
     }
   }
-
