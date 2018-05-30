@@ -29,7 +29,7 @@ class DockerPipelineSteps implements Serializable {
      try {
 	image.inside(docker_opts) { c ->
       //steps.sh "mvn ${goals}"
-	steps.sh "mvn --setting /opt/maven/settings.xml ${goals}"
+	steps.sh "mvn --settings /opt/maven/settings.xml ${goals}"
 	}
     } finally {
       archiveTestReport(testreport)
