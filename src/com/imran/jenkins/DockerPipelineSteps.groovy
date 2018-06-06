@@ -2,34 +2,37 @@ package com.imran.jenkins;
 
 class DockerPipelineSteps implements Serializable {
  
- static final def docker_opts   = "-v /home/jenkins/.m2:/opt/maven/"
+ //static final def docker_opts   = "-v /home/jenkins/.m2:/opt/maven/"
 
   def steps
 
   DockerPipelineSteps(steps) { this.steps = steps }
 
-  def mavenbuild(image, goals, testreport = null) {
+ // def mavenbuild(image, goals, testreport = null) {
+    def mavenbuild(goals, testreport = null) {
      try {
-       image.inside(docker_opts) { c ->
+	steps.sh "mvn --settings /root/.m2/settings.xml ${goals}"
+      /* image.inside(docker_opts) { c ->
        steps.sh "mvn --settings /opt/maven/settings.xml ${goals}"
-        }
+        }*/
       } catch(err) {
 	if (currentBuild.result == 'UNSTABLE')
                 currentBuild.result = 'FAILURE'
           throw err
         } finally { 
-	 // step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml', healthScaleFactor: 1.0])
-	  //  junit '**/target/surefire-reports/*.txt'
+	 /*step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml', healthScaleFactor: 1.0])
+	  junit '**/target/surefire-reports/*.txt' */
 	    archiveTestReport(testreport)
        }
    }
 
-  def sonar(image, goals, testreport = null) {
+ // def sonar(image, goals, testreport = null) {
+  def sonar(goals, testreport = null) {
      //image.pull
      try {
-	image.inside(docker_opts) { c ->
-      //steps.sh "mvn ${goals}"
-	steps.sh "mvn --settings /opt/maven/settings.xml ${goals}"
+       /*image.inside(docker_opts) { c ->
+        steps.sh "mvn ${goals}" */
+	steps.sh "mvn --settings /root/.m2/settings.xml ${goals}"
 	}
     } finally {
       archiveTestReport(testreport)
