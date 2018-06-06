@@ -11,7 +11,7 @@ class DockerPipelineSteps implements Serializable {
  // def mavenbuild(image, goals, testreport = null) {
     def mavenbuild(goals, testreport = null) {
      try {
-	steps.sh "mvn --settings /root/.m2/settings.xml ${goals}"
+	steps.sh "mvn --settings ~/.m2/settings.xml ${goals}"
       /* image.inside(docker_opts) { c ->
        steps.sh "mvn --settings /opt/maven/settings.xml ${goals}"
         }*/
@@ -30,7 +30,7 @@ class DockerPipelineSteps implements Serializable {
     def sonar(goals, testreport = null) {
      //image.pull
      try {
-        steps.sh "mvn --settings /root/.m2/settings.xml ${goals}"
+        steps.sh "mvn --settings ~/.m2/settings.xml ${goals}"
        /*image.inside(docker_opts) { c ->
         steps.sh "mvn ${goals}"
 	steps.sh "mvn --settings /root/.m2/settings.xml ${goals}"
