@@ -52,7 +52,12 @@ class DockerPipelineSteps implements Serializable {
 	returnStdout: true
         ).trim()
     def command = "docker rmi -f ${NoneImageid}"
-      steps.sh "${command}"
+      if (NoneImageid.length() > 2) {
+	echo "Removing image:${NoneImageid}"
+	steps.sh "${command}"
+	} else {
+		echo "There are no more <none> containers"
+		} 
     }
 
   def RemoveImage(dockerreponame, buildlabel) {
