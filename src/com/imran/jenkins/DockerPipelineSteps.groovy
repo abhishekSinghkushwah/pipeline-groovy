@@ -56,7 +56,7 @@ class DockerPipelineSteps implements Serializable {
 	steps.sh "Removing image: ${NoneImageid}"
 	steps.sh "${command}"
 	} else {
-		steps.sh "echo There are no more <none> containers"
+		steps.sh "echo There are no more none containers"
 		} 
     }
 
@@ -67,6 +67,11 @@ class DockerPipelineSteps implements Serializable {
 
   def RemoveContainer() {
 	def ContainerId = "docker ps -a -q | xargs -n 1 -I {} sudo docker rm -f {}"
+	/*if (ContainerId.length() > 2) {
+        steps.sh "Removing Container: ${ContainerId}"*/
         steps.sh "${ContainerId}"
+       /*} else {
+                steps.sh "echo There are no more none containers"
+                }*/
     }
   }
