@@ -1,5 +1,7 @@
 package com.imran.jenkins;
 
+import groovy.json.JsonSlurper
+
 public class Nexus implements Serializable {
     
     def steps
