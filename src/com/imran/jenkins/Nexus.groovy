@@ -19,7 +19,8 @@ def Get_Sha = steps.sh(script: "curl -I -H 'Accept: application/vnd.docker.distr
 
 println "Fetched sha :" + Get_Sha
 
-println 
+/* Get digest for image */
+ 
 def imgurl = "https://docker.imran.com:18443/v2/${app}/manifests/${Get_Sha}"
 
 //def url = "https://docker.imran.com:18443/v2/"+ app +"/manifests/" + sha + ""
@@ -31,7 +32,6 @@ def json = new JsonSlurper().parseText(imgurl.toURL().getText(
 ));
 
 def Getimgdigest = json.config.digest.trim();
-
 
 return Get_Sha
 return Getimgdigest
