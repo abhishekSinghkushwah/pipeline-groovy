@@ -12,14 +12,14 @@ public class Nexus implements Serializable {
     
 def get_sha_for_tags(app, tag ) {
     
-println "Application is : ${app} and  Tag is : ${tag} "
-
 def url = "https://docker.imran.com:18443/v2/${app}/manifests/${tag}"
 def Get_Sha = steps.sh(script: "curl -I -H 'Accept: application/vnd.docker.distribution.manifest.v2+json' -X GET ${url} | grep Docker-Content-Digest | awk '{print \$2}' ", returnStdout: true).trim()
 
-println "Fetched sha :" + Get_Sha
+//println "Fetched sha :" + Get_Sha
+steps.sh "echo This is the tag sha : ${Get_Sha}"
 
-/* Get digest for image */
+/* Get digest for image 
+*/
  
 def imgurl = "https://docker.imran.com:18443/v2/${app}/manifests/${Get_Sha}"
 
@@ -32,10 +32,13 @@ def json = new JsonSlurper().parseText(imgurl.toURL().getText(
 ));
 
 def Getimgdigest = json.config.digest.trim();
+steps.sh "echo This is the digest for : ${Getimgdigest}"
+steps.sh "echo This is the digest for : ${Get_Sha}"
 
 return Get_Sha
 return Getimgdigest
-    //return this.Tag_Sha
+//return this.Tag_Sha
+
 }
 
 //@NonCPS
