@@ -1,6 +1,7 @@
 package com.imran.jenkins;
 
-import groovy.json.JsonSlurper
+//import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 public class Nexus implements Serializable {
     
@@ -33,7 +34,7 @@ def json = new JsonSlurper().parseText(imgurl.toURL().getText(
 ));*/
 
 URL apiUrl = new URL(imgurl)
-def json = (Map) new JsonSlurper().parseText(apiUrl.text)
+def json = new JsonSlurperClassic().parseText(apiUrl.text)
 
 def Getimgdigest = json.config.digest.trim();
 
