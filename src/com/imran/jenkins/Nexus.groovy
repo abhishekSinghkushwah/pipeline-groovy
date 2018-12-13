@@ -23,28 +23,29 @@ steps.sh "echo This is the tag sha : ${Get_Sha}"
  
 def imgurl = "https://docker.imran.com:18443/v2/${app}/manifests/${Get_Sha}"
 
-//def url = "https://docker.imran.com:18443/v2/"+ app +"/manifests/" + sha + ""
+/*def url = "https://docker.imran.com:18443/v2/"+ app +"/manifests/" + sha + ""
 
 def json = new JsonSlurper().parseText(imgurl.toURL().getText(
   requestProperties: [
    'Accept': 'application/json'
   ]
-));
+));*/
 
-def Getimgdigest = json.config.digest.trim();
+Map lazyMap = (Map) new JsonSlurper().parseText(imgurl)
+
+def Getimgdigest = lazyMap.config.digest.trim();
+
 steps.sh "echo This is the digest for : ${Getimgdigest}"
 steps.sh "echo This is the digest for : ${Get_Sha}"
 
-return Get_Sha
-return Getimgdigest
+return Get_Sha + ',' + Getimgdigest
 //return this.Tag_Sha
-
 }
 
 //@NonCPS
-def parseJsonText(String jsonText) {
+/*def parseJsonText(String jsonText) {
   final slurper = new JsonSlurper()
   return new HashMap<>(slurper.parseText(jsonText))
-}
+}*/
 
 }
