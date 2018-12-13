@@ -32,7 +32,8 @@ def json = new JsonSlurper().parseText(imgurl.toURL().getText(
   ]
 ));*/
 
-def json = (Map) new JsonSlurper().parseText(imgurl)
+URL apiUrl = new URL(imgurl)
+def json = (Map) new JsonSlurper().parseText(apiUrl.text)
 
 def Getimgdigest = json.config.digest.trim();
 
