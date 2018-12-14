@@ -41,7 +41,7 @@ def Getimgdigest = json.config.digest.trim();
 //steps.sh "echo This is the digest for : ${Getimgdigest}"
 //steps.sh "echo This is the digest for : ${Get_Sha}"
 
-def Throw_sha = [ "'Get_Sha'" + ',' + "'Getimgdigest'" ]
+def Throw_sha = [ "'${Get_Sha}'" + ',' + "'${Getimgdigest'}" ]
 steps.sh "echo Digest for both tag and image : ${Throw_sha}"
 return Throw_sha
 //return [ "'Get_Sha' + ',' + 'Getimgdigest' ]
