@@ -3,6 +3,7 @@ package com.imran.jenkins;
 //import groovy.json.JsonSlurper
 import groovy.json.JsonSlurperClassic
 
+//@NonCPS
 public class Nexus implements Serializable {
     
     def steps
@@ -21,8 +22,7 @@ steps.sh "echo This is the tag sha : ${Get_Sha}"
 
 /* Get digest for image 
 */
- 
-//@NonCPS
+
 def imgurl = "https://docker.imran.com:18443/v2/${app}/manifests/${Get_Sha}"
 
 /*def url = "https://docker.imran.com:18443/v2/"+ app +"/manifests/" + sha + ""
@@ -38,10 +38,13 @@ def json = new JsonSlurperClassic().parseText(apiUrl.text)
 
 def Getimgdigest = json.config.digest.trim();
 
-steps.sh "echo This is the digest for : ${Getimgdigest}"
-steps.sh "echo This is the digest for : ${Get_Sha}"
+//steps.sh "echo This is the digest for : ${Getimgdigest}"
+//steps.sh "echo This is the digest for : ${Get_Sha}"
 
-return [ Get_Sha + ',' + Getimgdigest ]
+def Throw_sha = [ "'Get_Sha" + ',' + "Getimgdigest'" ]
+steps.sh "echo Digest for both tag and image : ${Throw_sha}"
+return Throw_sha
+//return [ "'Get_Sha' + ',' + 'Getimgdigest' ]
 //return this.Tag_Sha
 }
 
