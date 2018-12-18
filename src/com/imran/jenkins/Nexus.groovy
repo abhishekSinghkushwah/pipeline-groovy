@@ -52,13 +52,14 @@ return [ Get_Sha + ',' + Getimgdigest ]
   return new HashMap<>(slurper.parseText(jsonText))
 }*/
 
-def deletetagsha( tagsha imgsha ) {
+def deletetagsha( tagsha, imgsha ) {
 withCredentials([string(credentialsId: 'nexusid', variable: 'password')]) {
                 
                //def app_sha = "https://docker.imran.com:18443/v2/"+ APPLICATION +"/manifests/" + get_sha + ""
+               def app_sha = "https://docker.imran.com:18443/v2/${app}/manifests/${tagsha}"
                //def del_tag = sh(script: "curl -X DELETE -H 'Authorization: token ${execute}' ${app_sha} ", returnStdout: true).trim()
-               def del_tag = sh(script: "curl -u 'admin:${password}' -X DELETE ${tagsha} ", returnStdout: true).trim()
-               steps.sh "echo Tag Deleted: ${tagsha} "
+               def del_tag = sh(script: "curl -u 'admin:${password}' -X DELETE ${app_sha} ", returnStdout: true).trim()
+               steps.sh "echo Tag Deleted: ${del_tag} "
   }
  }
 
