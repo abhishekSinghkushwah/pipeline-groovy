@@ -59,6 +59,7 @@ withCredentials([string(credentialsId: 'nexusid', variable: 'password')]) {
                //def del_tag = sh(script: "curl -X DELETE -H 'Authorization: token ${execute}' ${app_sha} ", returnStdout: true).trim()
                def del_tag = sh(script: "curl -u 'admin:${password}' -X DELETE ${tagsha} ", returnStdout: true).trim()
                steps.sh "echo Tag Deleted: ${tagsha} "
-}
+  }
+ }
 
 }
