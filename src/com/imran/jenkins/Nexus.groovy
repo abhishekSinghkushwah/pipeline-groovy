@@ -17,7 +17,6 @@ def get_sha_for_tags(app, tag ) {
 def url = "https://docker.imran.com:18443/v2/${app}/manifests/${tag}"
 def Get_Sha = steps.sh(script: "curl -I -H 'Accept: application/vnd.docker.distribution.manifest.v2+json' -X GET ${url} | grep Docker-Content-Digest | awk '{print \$2}' ", returnStdout: true).trim()
 
-//println "Fetched sha :" + Get_Sha
 steps.sh "echo This is the tag sha : ${Get_Sha}"
 
 /* Get digest for image 
@@ -52,5 +51,14 @@ return [ Get_Sha + ',' + Getimgdigest ]
   final slurper = new JsonSlurper()
   return new HashMap<>(slurper.parseText(jsonText))
 }*/
+
+def deletetagsha( tagsha imgsha ) {
+withCredentials([string(credentialsId: 'nexusid', variable: 'password')]) {
+                
+               //def app_sha = "https://docker.imran.com:18443/v2/"+ APPLICATION +"/manifests/" + get_sha + ""
+               //def del_tag = sh(script: "curl -X DELETE -H 'Authorization: token ${execute}' ${app_sha} ", returnStdout: true).trim()
+               def del_tag = sh(script: "curl -u 'admin:${password}' -X DELETE ${tagsha} ", returnStdout: true).trim()
+               steps.sh "echo Tag Deleted: ${tagsha} "
+}
 
 }
