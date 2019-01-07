@@ -3,10 +3,11 @@ package com.imran.jenkins;
 //import groovy.json.JsonSlurper
 import groovy.json.JsonSlurperClassic
 
-//@NonCPS
 public class Nexus implements Serializable {
     
-    def steps
+static final def userid = 'nexusid'    
+
+   def steps
 
     Nexus(steps) { 
       this.steps = steps 
@@ -52,15 +53,21 @@ return [ Get_Sha + ',' + Getimgdigest ]
   return new HashMap<>(slurper.parseText(jsonText))
 }*/
 
-def deletetagsha( tagsha, imgsha ) {
-withCredentials([string(credentialsId: 'nexusid', variable: 'password')]) {
+def deletetagsha( app, tagsha, imgsha ) {
+  
+try {
+  steps.withCredentials([steps.string(credentialsId: userid, variable: 'password')]) {
                 
                //def app_sha = "https://docker.imran.com:18443/v2/"+ APPLICATION +"/manifests/" + get_sha + ""
                def app_sha = "https://docker.imran.com:18443/v2/${app}/manifests/${tagsha}"
-               //def del_tag = sh(script: "curl -X DELETE -H 'Authorization: token ${execute}' ${app_sha} ", returnStdout: true).trim()
-               def del_tag = sh(script: "curl -u 'admin:${password}' -X DELETE ${app_sha} ", returnStdout: true).trim()
+               //def del_tag = steps.sh(script: "curl -X DELETE -H 'Authorization: token ${execute}' ${app_sha} ", returnStdout: true).trim()
+               def del_tag = steps.sh(script: "curl -u 'admin:${password}' -X DELETE ${app_sha} ", returnStdout: true).trim()
                steps.sh "echo Tag Deleted: ${del_tag} "
   }
+  }catch (error){
+            steps.echo error.getMessage()
+            throw error 
+               }
  }
 
 }
