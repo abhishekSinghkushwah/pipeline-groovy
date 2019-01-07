@@ -6,7 +6,7 @@ import groovy.json.JsonSlurperClassic
 public class Nexus implements Serializable {
     
 static final def userid = 'nexusid'    
- static final string password = credentials('nexusid')
+static final def password = credentials('nexusid')
 
    def steps
 
