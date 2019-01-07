@@ -6,6 +6,7 @@ import groovy.json.JsonSlurperClassic
 public class Nexus implements Serializable {
     
 static final def userid = 'nexusid'    
+password = credentials('nexusid')
 
    def steps
 
@@ -56,7 +57,8 @@ return [ Get_Sha + ',' + Getimgdigest ]
 def deletetagsha( app, tagsha, imgsha ) {
   
 try {
-  steps.withCredentials([steps.string(credentialsId: userid, variable: 'password')]) {
+  steps.withCredentials([steps.string(credentialsId: userid, 
+                 variable: 'password')]) {
                 
                //def app_sha = "https://docker.imran.com:18443/v2/"+ APPLICATION +"/manifests/" + get_sha + ""
                def app_sha = "https://docker.imran.com:18443/v2/${app}/manifests/${tagsha}"
