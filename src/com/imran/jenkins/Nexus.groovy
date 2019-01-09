@@ -66,12 +66,13 @@ try {
                //def del_tag = steps.sh(script: "curl -X DELETE -H 'Authorization: token ${execute}' ${app_sha} ", returnStdout: true).trim()
                def del_tag = steps.sh(script: "curl -u 'admin:${NEXUS_CREDENTIALS}' -X DELETE ${app_sha} ", returnStdout: true).trim()
                steps.sh "echo Tag Deleted: ${del_tag} "
-  }
+
+            }
+         }
   }catch (error){
             steps.echo error.getMessage()
             throw error 
                }
-           }
  }
 
 }
