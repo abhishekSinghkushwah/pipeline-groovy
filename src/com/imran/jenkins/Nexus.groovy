@@ -58,17 +58,20 @@ def deletetagsha( app, tagsha, imgsha ) {
   
 try {
   steps.withCredentials([steps.string( credentialsId: 'nexusid', variable: 'NEXUSPASSWORD')]) {
-                
+       steps.withEnv(["NEXUS_CREDENTIALS=${NEXUSPASSWORD}"]) {                
+
+
                //def app_sha = "https://docker.imran.com:18443/v2/"+ APPLICATION +"/manifests/" + get_sha + ""
                def app_sha = "https://docker.imran.com:18443/v2/${app}/manifests/${tagsha}"
                //def del_tag = steps.sh(script: "curl -X DELETE -H 'Authorization: token ${execute}' ${app_sha} ", returnStdout: true).trim()
-               def del_tag = steps.sh(script: "curl -u 'admin:${NEXUSPASSWORD}' -X DELETE ${app_sha} ", returnStdout: true).trim()
+               def del_tag = steps.sh(script: "curl -u 'admin:${NEXUS_CREDENTIALS}' -X DELETE ${app_sha} ", returnStdout: true).trim()
                steps.sh "echo Tag Deleted: ${del_tag} "
   }
   }catch (error){
             steps.echo error.getMessage()
             throw error 
                }
+           }
  }
 
 }
