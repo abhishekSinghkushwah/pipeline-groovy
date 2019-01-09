@@ -60,9 +60,9 @@ try {
   steps.withCredentials([steps.string( 
                               credentialsId: 'nexusid', 
                               variable: 'NEXUSPASSWORD')]) {
-       
-                  echo "${env.NEXUSPASSWORD}"
-                  sh 'echo $NEXUSPASSWORD'
+
+
+                 sh 'echo $NEXUSPASSWORD'
            //steps.withEnv(["NEXUS_CREDENTIALS=${NEXUSPASSWORD}"]) {                
 
 
