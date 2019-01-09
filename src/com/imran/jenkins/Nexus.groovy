@@ -61,7 +61,7 @@ try {
                               credentialsId: 'nexusid', 
                               variable: 'NEXUSPASSWORD')]) {
 
-           steps.withEnv(["NEXUSPASSWORD=${NEXUSPASSWORD}"]) {                
+           withEnv(["NEXUSPASSWORD=${NEXUSPASSWORD}"]) {                
 
 
                //def app_sha = "https://docker.imran.com:18443/v2/"+ APPLICATION +"/manifests/" + get_sha + ""
